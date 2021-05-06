@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import ContactContext from "../../context/contact/contactContext"
 
 const ContactItem = ({ contact }) => {
-  const {id, name, email, phone, type } = contact;
+  const {_id, name, email, phone, type } = contact;
   
-  const {deleteContact, setCurrent} = useContext(ContactContext);
+  const {deleteContact, setCurrent, clearCurrent} = useContext(ContactContext);
   
   const onDelete = () => { 
-    deleteContact(id)
+    deleteContact(_id)
+    clearCurrent();
   }
   const onEdit = () => setCurrent(contact)
   
@@ -36,8 +37,14 @@ const ContactItem = ({ contact }) => {
         )}
       </ul>
       <p>
-        <button className="btn btn-dark btn-sm" onClick={onEdit}>Edit</button>
-        <button className="btn btn-danger btn-sm" onClick={onDelete}>Delete</button>
+        <button 
+          className="btn btn-dark btn-sm" 
+          onClick={onEdit}
+        >Edit</button>
+        <button 
+          className="btn btn-danger btn-sm" 
+          onClick={onDelete}
+        >Delete</button>
       </p>
     </div>
   );
@@ -45,6 +52,4 @@ const ContactItem = ({ contact }) => {
 ContactItem.propTypes = {
   contact: PropTypes.object.isRequired,
 }
-
-
 export default ContactItem;
